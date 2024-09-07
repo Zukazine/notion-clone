@@ -9,7 +9,7 @@ export default function Home() {
           href='/counter'
           className="flex items-center justify-center border-2 border-black rounded-3xl p-12 cursor-pointer hover:bg-black hover:text-white">
           <p className="font-mono text-lg">
-            Aku mau ngitung Paaa !!
+            Aku mau ngitung Paaa !
           </p>
         </Link>
       </div>
