@@ -11,7 +11,7 @@ export const Logo =()=> {
   return (
     <div className="hidden md:flex items-center gap-x-2 scale-75">
       <Image 
-        src='/notion.png'
+        src='./notion.png'
         width={40}
         height={40}
         alt="notion logo"
@@ -19,7 +19,7 @@ export const Logo =()=> {
         unoptimized
       />
       <Image 
-        src='/notion-dark.png'
+        src='./notion-dark.png'
         width={40}
         height={40}
         alt="notion logo"

@@ -29,5 +29,5 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/zukazine/mycicd/notion-clone:latest
+        tags: ghcr.io/zukazine/notion-clone/notion-clone:latest
         no-cache: true

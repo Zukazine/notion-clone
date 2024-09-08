@@ -6,14 +6,14 @@ const Heroes = () => {
       <div className="flex items-center">
         <div className="relative w-[300px] h-[300px] sm:w-[350px] sm:h-[350px] md:h-[400px] md:w-[400px] md:scale-x-[-1]">
           <Image
-            src='/man.png'
+            src='./man.png'
             fill
             className="object-contain dark:hidden"
             alt='heroes'
             unoptimized
           />
           <Image
-            src='/man-dark.png'
+            src='./man-dark.png'
             fill
             className="object-contain hidden dark:block"
             alt='heroes'
