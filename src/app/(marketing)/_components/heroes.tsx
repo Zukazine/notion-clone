@@ -10,12 +10,14 @@ const Heroes = () => {
             fill
             className="object-contain dark:hidden"
             alt='heroes'
+            unoptimized
           />
           <Image
             src='/man-dark.png'
             fill
             className="object-contain hidden dark:block"
             alt='heroes'
+            unoptimized
           />
         </div>
         <div className="relative h-[400px] w-[400px] hidden md:block">

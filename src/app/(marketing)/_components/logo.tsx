@@ -16,6 +16,7 @@ export const Logo =()=> {
         height={40}
         alt="notion logo"
         className="dark:hidden"
+        unoptimized
       />
       <Image 
         src='/notion-dark.png'
@@ -23,6 +24,7 @@ export const Logo =()=> {
         height={40}
         alt="notion logo"
         className="hidden dark:block"
+        unoptimized
       />
       <p className={cn('font-semibold', font.className)}>
         Notion
