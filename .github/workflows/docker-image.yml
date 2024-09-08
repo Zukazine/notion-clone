@@ -1,10 +1,10 @@
-name: Build, Push to GHCR, and Update Docker Image
+name: Build, Push Docker Image
 
 on:
   push:
-    branches: [ "dev","master" ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ "dev","master" ]
+    branches: [ "master" ]
 
 jobs:
   build:
