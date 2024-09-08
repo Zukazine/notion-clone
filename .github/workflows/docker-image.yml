@@ -29,34 +29,5 @@ jobs:
       with:
         context: .
         push: true
-        tags: ghcr.io/zukazine/mycicd/counter-app:latest
+        tags: ghcr.io/zukazine/mycicd/notion-clone:latest
         no-cache: true
-
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    # if:[space]github.ref == 'refs/heads/master'
-
-    steps:
-    - name: Log in to GitHub Container Registry
-      uses: docker/login-action@v3
-      with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Pull Docker image
-      run: docker pull ghcr.io/zukazine/mycicd/counter-app:latest
-
-    - name: Stop and remove old container
-      run: |
-        if [ "$(docker ps -q -f name=latest-counter-app)" ]; then
-          docker stop latest-counter-app
-          docker rm -f latest-counter-app
-        fi
-
-    - name: Run new container
-      run: docker run -d --name latest-counter-app -p 3000:3000 ghcr.io/zukazine/mycicd/counter-app:latest
-
-    - name: Verify running container
-      run: docker ps -f name=latest-counter-app
