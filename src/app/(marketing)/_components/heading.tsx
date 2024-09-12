@@ -9,7 +9,7 @@ export const Heading = () => {
   const { isSignedIn } = useUser()
   
   return(
-    <div className="max-w-3xl space-y-4">
+    <div className="max-w-3xl flex flex-col space-y-4">
       <h1 className="text-3xl sm:text-3xl md:text-5xl font-bold">
         Your Ideas, Documents, & Plans. Unified. Welcome to <span className="underline">Notion</span>
       </h1>

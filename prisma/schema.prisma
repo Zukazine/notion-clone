@@ -13,4 +13,29 @@ model User {
   email     String   @unique
   name      String?
   createdAt DateTime @default(now())
+
+  Document Document[] // One-to-Many relation with Document
 }
+
+model Document {
+  id               String   @id @default(cuid())
+  title            String   @default("Untitled")
+  content          String?
+  coverImage       String?
+  icon             String?
+  isArchived       Boolean? @default(false)
+  isPublished      Boolean? @default(false)
+  parentDocumentId String?
+  userId           String
+  createdAt        DateTime @default(now())
+
+  user     User       @relation(fields: [userId], references: [clerkId]) // Many-to-one relation with User
+  parent   Document?  @relation("ParentDoc", fields: [parentDocumentId], references: [id]) // Self-relation for parent document
+  children Document[] @relation("ParentDoc") // One-to-many self-relation for child documents
+
+  @@index([userId], name: "idx_userId") // Index by userId
+  @@index([userId, parentDocumentId], name: "idx_userId_parentDocument") // Composite index by userId and parentDocument
+}
+
+//An index is created on userId (@@index([userId], name: "idx_userId")) to allow efficient queries by userId.  
+//Another composite index is created on userId and parentDocument (@@index([userId, parentDocument], name: "idx_userId_parentDocument")) for querying documents by both user and parent document.
