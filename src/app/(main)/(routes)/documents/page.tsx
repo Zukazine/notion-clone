@@ -23,9 +23,7 @@ const Documents = () => {
     }
 
     setLoading(true);
-    console.log('user id:', user.id)
     try {
-      console.log('ROTIII')
       const response = await fetch('/api/create-document', {
         method: 'POST',
         headers: {
@@ -36,7 +34,6 @@ const Documents = () => {
           title: "Untitled"
         }),
       });
-      console.log('ROTOOO')
 
       const data = await response.json();
       if (response.ok) {

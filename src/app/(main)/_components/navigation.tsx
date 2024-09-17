@@ -1,21 +1,28 @@
 'use client'
 
-import { ChevronLeft, MenuIcon } from "lucide-react";
+import { ChevronLeft, MenuIcon, PlusCircle, Search, Settings } from "lucide-react";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ElementRef, useEffect, useRef, useState } from "react";
 import UserItem from "./user-item";
 import { useMediaQuery } from "usehooks-ts";
+import Item from "./item";
+import { useUser } from "@clerk/nextjs";
+import { toast } from 'react-toastify'
 
 const Navigation = () => { 
   const pathname = usePathname()
   const isMobile = useMediaQuery("(max-width: 786px)")
+  const { user } = useUser()
 
   const isResizingRef = useRef(false)
   const sidebarRef = useRef<ElementRef<"aside">>(null)
   const navbarRef = useRef<ElementRef<"div">>(null)
   const [isResetting, setIsResetting] = useState(false)
   const [isCollapsed, setIsCollapsed] = useState(isMobile)
+  const [loading, setLoading] = useState(false)
+
+  const [documents, setDocuments] = useState([]);
 
   useEffect(() => {
     if (isMobile) {
@@ -90,6 +97,54 @@ const Navigation = () => {
     }
   }
 
+  useEffect(() => {
+  const fetchDocuments = async () => {
+    try {
+      const response = await fetch('/api/get-document');
+      const data = await response.json();
+      setDocuments(data);
+    } catch (error) {
+      console.error('Error fetching documents:', error);
+    }
+  };
+
+  
+  fetchDocuments();
+
+  }, []);
+
+  const createDocument = async () => {
+    if (!user) {
+      toast.error("You must be logged in to create a note.");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      const response = await fetch('/api/create-document', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: user.id,
+          title: "Untitled"
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        toast.success("Document created successfully!");
+      } else {
+        toast.error(`Error: ${data.error}`);
+      }
+    } catch (error) {
+      toast.error("Failed to create document.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return ( 
     <div className="">
       <aside 
@@ -112,11 +167,32 @@ const Navigation = () => {
         </div>
         <div>
           <UserItem/>
+          <Item 
+            label="Search"
+            icon={Search}
+            isSearch
+            onClick={() => {}}
+          />
+          <Item 
+            label="Settings"
+            icon={Settings}
+            onClick={() => {}}
+          />
+          <Item 
+            onClick={createDocument}
+            label='New page'
+            icon={PlusCircle}
+          />
         </div>
         <div className="mt-4">
           <p>
             Documents
           </p>
+          <ul>
+            {documents.map((doc: { id: string, title: string }) => (
+              <li key={doc.id}>{doc.title}</li>
+            ))}
+          </ul>
         </div>
         <div 
           onMouseDown={handleMouseDown}

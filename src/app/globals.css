@@ -4,12 +4,12 @@
 
 html, 
 body:root{
-  @apply h-full
+  @apply min-h-screen
 }
 
-.main-root {
+/* .main-root {
   @apply h-full
-}
+} */
 
 @layer utilities {
   .text-balance {
