@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import { useUser } from "@clerk/nextjs";
 import { PlusCircle } from "lucide-react";
 import Image from "next/image";
-import { Toaster } from 'sonner'
-import { toast } from 'react-toastify'
+import { toast, ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css';
 
 import { 
   useState,
@@ -50,7 +50,7 @@ const Documents = () => {
 
   return ( 
     <>
-      <Toaster />
+      <ToastContainer position="bottom-center" autoClose={800}/>
       <div className="h-full flex flex-col items-center justify-center space-y-4 border border-black">
         <Image
           src='/man.png'

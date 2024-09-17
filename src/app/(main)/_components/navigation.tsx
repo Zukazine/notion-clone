@@ -98,20 +98,20 @@ const Navigation = () => {
   }
 
   useEffect(() => {
-  const fetchDocuments = async () => {
-    try {
-      const response = await fetch('/api/get-document');
-      const data = await response.json();
-      setDocuments(data);
-    } catch (error) {
-      console.error('Error fetching documents:', error);
-    }
-  };
+    const fetchDocuments = async () => {
+      try {
+        const response = await fetch('/api/get-document');
+        if (!response.ok) throw new Error('Failed to fetch documents');
+        const data = await response.json();
+        setDocuments(data);
+      } catch (error) {
+        toast.error("Error fetching documents");
+      }
+    };
 
-  
-  fetchDocuments();
+    fetchDocuments()
 
-  }, []);
+  }, [pathname])
 
   const createDocument = async () => {
     if (!user) {
@@ -135,6 +135,8 @@ const Navigation = () => {
       const data = await response.json();
       if (response.ok) {
         toast.success("Document created successfully!");
+        //@ts-ignore
+        setDocuments((prevDocuments) => [...prevDocuments, data])
       } else {
         toast.error(`Error: ${data.error}`);
       }
@@ -185,14 +187,7 @@ const Navigation = () => {
           />
         </div>
         <div className="mt-4">
-          <p>
-            Documents
-          </p>
-          <ul>
-            {documents.map((doc: { id: string, title: string }) => (
-              <li key={doc.id}>{doc.title}</li>
-            ))}
-          </ul>
+          <DocumentList />
         </div>
         <div 
           onMouseDown={handleMouseDown}
